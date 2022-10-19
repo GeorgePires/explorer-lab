@@ -20,7 +20,7 @@ function setCardType(type) {
 }
 
 // Disponibiliza funções globais "globalThis.my_function"
-globalThis.setCardType = setCardType("visa") 
+globalThis.setCardType = setCardType("mastercard") 
 
 const securityCode = document.getElementById("security-code")
 const securityCodePattern =  {
@@ -49,6 +49,7 @@ const expirationDatePattern = {
 const expirationDateMasked = IMask(expirationDate, expirationDatePattern)
 
 const cardNumber = document.getElementById("card-number")
+// Verifica o numero com base no regex para cada cartão
 const cardNumberPattern = {
   mask: [
     {
@@ -66,4 +67,14 @@ const cardNumberPattern = {
       cardtype: "default",
     },
   ],
+  dispatch: function (appended, dynamicMasked) {
+    const number = (dynamicMasked.value + appended).replace(/\D/g, "")
+    const foundMask = dynamicMasked.compiledMasks.find(function (item) {
+      return number.match(item.regex)
+    })
+
+    return foundMask
+  }
 }
+
+const cardNumberMasked = IMask(cardNumber, cardNumberPattern)
