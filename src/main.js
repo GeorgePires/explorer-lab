@@ -2,7 +2,7 @@ import "./css/index.css"
 import IMask from "imask"
 
 // Pegando elementos HTML - copy selector
-const ccBgColor01 = document.querySelector('.cc-bg svg > g g:nth-child(1) path')
+const ccBgColor01 = document.querySelector(".cc-bg svg > g g:nth-child(1) path")
 const ccBgColor02 = document.querySelector(".cc-bg svg > g g:nth-child(2) path")
 const ccLogo = document.querySelector(".cc-logo span:nth-child(2) img")
 
@@ -12,20 +12,20 @@ function setCardType(type) {
     visa: ["#436D99", "#2D57F2"],
     mastercard: ["#DF6F26", "#C69347"],
     maestro: ["#CC2131", "#3A9BD9"],
-    default: ["black", "gray"]
+    default: ["black", "gray"],
   }
 
   ccBgColor01.setAttribute("fill", colors[type][0])
   ccBgColor02.setAttribute("fill", colors[type][1])
-  ccLogo.setAttribute('src', `cc-${type}.svg`)
+  ccLogo.setAttribute("src", `cc-${type}.svg`)
 }
 
 // Disponibiliza funções globais "globalThis.my_function"
-globalThis.setCardType = setCardType("mastercard") 
+globalThis.setCardType = setCardType("visa")
 
 const securityCode = document.getElementById("security-code")
-const securityCodePattern =  {
-  mask: '000'
+const securityCodePattern = {
+  mask: "000",
 }
 
 const securityCodeMasked = IMask(securityCode, securityCodePattern)
@@ -37,14 +37,14 @@ const expirationDatePattern = {
     YY: {
       mask: IMask.MaskedRange,
       from: String(new Date().getFullYear()).slice(2),
-      to: String(new Date().getFullYear() + 10).slice(2)
+      to: String(new Date().getFullYear() + 10).slice(2),
     },
-    MM : {
+    MM: {
       mask: IMask.MaskedRange,
       from: 1,
-      to: 12
-    }
-  }
+      to: 12,
+    },
+  },
 }
 
 const expirationDateMasked = IMask(expirationDate, expirationDatePattern)
@@ -80,7 +80,24 @@ const cardNumberPattern = {
     })
 
     return foundMask
-  }
+  },
 }
 
 const cardNumberMasked = IMask(cardNumber, cardNumberPattern)
+
+const addButton = document.getElementById("add-card")
+addButton.addEventListener("click", () => {
+  alert("Cartão adicionado!")
+})
+
+document.querySelector("form").addEventListener("submit", (event) => {
+  event.preventDefault()
+})
+
+const cardHolder = document.getElementById("card-holder")
+cardHolder.addEventListener("input", () => {
+  const ccHolder = document.querySelector(".cc-holder .value")
+
+  ccHolder.innerText =
+    cardHolder.value.length === 0 ? "FULANO DA SILVA" : cardHolder.value
+})
