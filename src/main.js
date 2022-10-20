@@ -85,6 +85,8 @@ const cardNumberPattern = {
 
 const cardNumberMasked = IMask(cardNumber, cardNumberPattern)
 
+// Manipulando Eventos da DOM e IMask
+
 const addButton = document.getElementById("add-card")
 addButton.addEventListener("click", () => {
   alert("Cartão adicionado!")
@@ -101,3 +103,13 @@ cardHolder.addEventListener("input", () => {
   ccHolder.innerText =
     cardHolder.value.length === 0 ? "FULANO DA SILVA" : cardHolder.value
 })
+
+securityCodeMasked.on('accept', () => {
+  updateSecurityCode(securityCodeMasked.value)
+})
+
+function updateSecurityCode(code){
+  const ccSecutiry = document.querySelector(".cc-security .value")
+
+  ccSecutiry.innerText = code.length === 0 ? "123" : code
+}
