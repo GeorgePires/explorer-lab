@@ -21,7 +21,7 @@ function setCardType(type) {
 }
 
 // Disponibiliza funções globais "globalThis.my_function"
-globalThis.setCardType = setCardType("visa")
+globalThis.setCardType = setCardType
 
 const securityCode = document.getElementById("security-code")
 const securityCodePattern = {
@@ -112,4 +112,26 @@ function updateSecurityCode(code){
   const ccSecutiry = document.querySelector(".cc-security .value")
 
   ccSecutiry.innerText = code.length === 0 ? "123" : code
+}
+
+cardNumberMasked.on('accept', () => {
+  const cardType = cardNumberMasked.masked.currentMask.cardtype
+  setCardType(cardType)
+  updateCardNumber(cardNumberMasked.value)
+})
+
+function updateCardNumber(number) {
+  const ccNumber = document.querySelector(".cc-number")
+
+  ccNumber.innerText = number.length === 0 ? "1234 5678 9012 3456" : number
+}
+
+expirationDateMasked.on("accept", () => {
+  updateExpirationDate(expirationDateMasked.value)
+})
+
+function updateExpirationDate(date){
+  const ccExpiration = document.querySelector(".cc-extra .value")
+
+  ccExpiration.innerText = date.length === 0 ? "02/32" : date
 }
